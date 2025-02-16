@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Recommend a Movie</h2>
+    <h6>Enter The Name Of The Movie You Have Already Watched and Get Recommendations</h6>
+    <div>
+        <input type="text" id="movieInput" placeholder="Enter movie name">
+        <button id="recommendButton">Recommend</button>
+    </div>
+    <div id="recommendations"></div>
+
+    <script>
+        document.getElementById('recommendButton').addEventListener('click', function() {
+            const movieName = document.getElementById('movieInput').value;
+            fetch(`/api/recommend?movie=${encodeURIComponent(movieName)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const recommendationsDiv = document.getElementById('recommendations');
+                    recommendationsDiv.innerHTML = '';  // Clear previous recommendations
+                    if (data.error) {
+                        recommendationsDiv.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        data.forEach(movie => {
+                            const movieDiv = document.createElement('div');
+                            movieDiv.classList.add('movie');
+                            movieDiv.innerHTML = `
+                                <img src="${movie.poster}" alt="${movie.name} Poster">
+                                <h3>${movie.name}</h3>
+                                <p>Rating Count: ${movie.count}</p>
+                                <p>Rating: ${movie.mean_ratings}</p>
+                            `;
+                            recommendationsDiv.appendChild(movieDiv);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                });
+        });
+    </script>
+{% endblock %}

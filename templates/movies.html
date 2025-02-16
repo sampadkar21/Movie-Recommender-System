@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Top Movies</h2>
+    <div>
+        <label for="genreSelect">Select Genre:</label>
+        <select id="genreSelect">
+            <option value="">All Genres</option>
+            {% for genre in prec['genres'].explode().unique() %}
+                <option value="{{ genre }}">{{ genre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="yearSelect">Select Year:</label>
+        <select id="yearSelect">
+            <option value="">All Years</option>
+            {% for year in prec['year'].unique() | sort %}  <!-- Sort the years -->
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+
+        <button id="filterButton">Filter</button>
+        <button id="clearButton">Clear Filters</button>
+    </div>
+
+    <div id="movieList">
+        {% for movie in movies %}
+            <div class="movie">
+                <img src="{{ movie['image'] }}" alt="{{ movie['name'] }} Poster">
+                <h3>{{ movie['name'] }}</h3>
+                <p>Rating Count: {{ movie['count'] }}</p> 
+                <p>Rating: {{ movie['mean_ratings'] }}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        document.getElementById('filterButton').addEventListener('click', function() {
+            const genre = document.getElementById('genreSelect').value;
+            const year = document.getElementById('yearSelect').value;
+
+            // Constructing the query parameters based on selections
+            let queryParams = `/api/filter_movies?years[]=${year}&genres[]=${genre}`;
+
+            fetch(queryParams)
+                .then(response => response.json())
+                .then(data => {
+                    const movieList = document.getElementById('movieList');
+                    movieList.innerHTML = '';  // Clear previous movies
+
+                    // Show only top 20 movies if there are more than 20
+                    const moviesToDisplay = data.length > 20 ? data.slice(0, 20) : data;
+
+                    moviesToDisplay.forEach(movie => {
+                        const movieDiv = document.createElement('div');
+                        movieDiv.classList.add('movie');
+                        movieDiv.innerHTML = `
+                            <img src="${movie.image}" alt="${movie.name} Poster">
+                            <h3>${movie.name}</h3>
+                            <p>Rating Count: ${movie.count}</p>
+                            <p>Rating: ${movie.mean_ratings}</p>
+                        `;
+                        movieList.appendChild(movieDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching movies:', error));
+        });
+
+        document.getElementById('clearButton').addEventListener('click', function() {
+            document.getElementById('genreSelect').value = '';
+            document.getElementById('yearSelect').value = '';
+            location.reload();  // Reload the page to reset to top movies
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieMind - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <header>
+        <h1>Movie Analytics Dashboard</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Movie Counts by Year</h2>
+            <img src="{{ url_for('static', filename='graphs/movie_counts_by_year.png') }}" alt="Movie Counts by Year" class="graph">
+        </section>
+        <section>
+            <h2>Movie Counts by Genre</h2>
+            <img src="{{ url_for('static', filename='graphs/movie_counts_by_genre.png') }}" alt="Movie Counts by Genre" class="graph">
+        </section>
+        <section>
+            <h2>Top 10 Highest Grossing Movies</h2>
+            <img src="{{ url_for('static', filename='graphs/top_10_highest_grossing_movies.png') }}" alt="Top 10 Highest Grossing Movies" class="graph">
+        </section>
+        <section>
+            <h2>Top 10 Highest Rated Movies</h2>
+            <img src="{{ url_for('static', filename='graphs/top_10_highest_rated_movies.png') }}" alt="Top 10 Highest Rated Movies" class="graph">
+        </section>
+    </main>
+</body>
+{% endblock %}
