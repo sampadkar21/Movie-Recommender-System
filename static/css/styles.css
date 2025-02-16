@@ -1,0 +1,96 @@
+/* Reset some default styles */
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: center;
+    line-height: 1.6;  /* Improve readability */
+}
+
+header {
+    background: #1f77b4;  /* Dark blue header */
+    color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);  /* Subtle shadow for depth */
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;  /* Center content */
+    margin: auto;
+}
+
+section {
+    margin-bottom: 30px;  /* Space between sections */
+}
+
+h1 {
+    font-size: 2.5em;  /* Larger main heading */
+}
+
+h2 {
+    color: #333;  /* Color for subheadings */
+    font-size: 1.8em;  /* Slightly larger subheadings */
+    margin-bottom: 15px;  /* Space below headings */
+}
+
+.graph {
+    width: 100%;  /* Make graphs responsive */
+    height: auto;  /* Maintain aspect ratio */
+    border: 2px solid #1f77b4;  /* Border around graphs */
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    width: 100%;
+    margin-top: 30px;  /* Space above footer */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;  /* Smaller heading on mobile */
+    }
+
+    h2 {
+        font-size: 1.5em;  /* Smaller subheadings on mobile */
+    }
+}
+
+/* Additional styling for recommendations if needed */
+#recommendations {
+    display: grid;                /* Use CSS Grid for layout */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Create a responsive grid */
+    gap: 20px;                   /* Space between grid items */
+    margin-top: 20px;           /* Space above recommendations */
+}
+
+.movie {
+    text-align: center;          /* Center text under images */
+    border: 1px solid #ddd;     /* Optional: Add border around each movie */
+    border-radius: 8px;         /* Optional: Rounded corners */
+    overflow: hidden;            /* Hide overflow from image */
+    background-color: #f9f9f9;  /* Optional: Light background for movies */
+    transition: transform 0.2s; /* Optional: Smooth transform on hover */
+}
+
+.movie:hover {
+    transform: scale(1.05);      /* Optional: Slightly enlarge movie on hover */
+}
+
+.movie img {
+    width: 100%;                 /* Make images responsive */
+    height: auto;                /* Maintain aspect ratio */
+    border-bottom: 1px solid #ddd; /* Optional: Border below the image */
+}
